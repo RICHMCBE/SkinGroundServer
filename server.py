@@ -54,10 +54,6 @@ def upload_file():
 
 @app.route('/uploads/<path:filename>', methods=['GET'])
 def get_file(filename):
-    key = request.args.get('key')  # query parameter에서 key 검증
-    if key != SECRET_KEY:
-        log_request_info(request, is_error=True)
-        return jsonify({'error': '올바른 인증 키가 필요합니다.'}), 403
     try:
         response = send_from_directory(app.config['UPLOAD_FOLDER'], filename)
         log_request_info(request, is_error=False)
